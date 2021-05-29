@@ -1,6 +1,10 @@
 import { DataType, Model } from "sequelize-typescript";
 import sequelize from "../database";
 
+import config from "../config";
+
+const { UNIT_FEEDING_INTERVAL, HP: hp } = config.app;
+
 interface UnitAttributes {
 	name: string;
 	feedingInterval: number;
@@ -25,7 +29,7 @@ Unit.init(
 		},
 		feedingInterval: {
 			type: DataType.INTEGER,
-			defaultValue: 10,
+			defaultValue: UNIT_FEEDING_INTERVAL,
 		},
 		lastFed: {
 			type: DataType.DATE,
@@ -41,7 +45,7 @@ Unit.init(
 );
 
 Unit.beforeCreate("updateHp", (unit) => {
-	unit.hp = Math.round(Math.random() * 50 + 50);
+	unit.hp = hp || Math.round(Math.random() * 50 + 50);
 });
 
 export default Unit;

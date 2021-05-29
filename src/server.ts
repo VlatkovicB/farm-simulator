@@ -1,4 +1,5 @@
 import express from "express";
+
 import sequelize from "./database";
 import buildingRoutes from "./routes/buildingRoutes";
 import unitRoutes from "./routes/unitRoutes";
@@ -10,7 +11,6 @@ app.use(express.urlencoded({ extended: true }));
 
 try {
 	sequelize.authenticate();
-	sequelize.sync({ force: true });
 	console.log("Connected to database.");
 } catch (error) {
 	sequelize.close();

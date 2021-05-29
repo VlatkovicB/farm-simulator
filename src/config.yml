@@ -1,0 +1,10 @@
+database:
+  DB_SCHEMA: farm-simulator
+  DB_USER: postgres
+  DB_PASSWORD:
+  DB_HOST: localhost
+  DB_PORT: 5432
+app:
+  UNIT_FEEDING_INTERVAL: 10
+  BUILDING_FEEDING_INTERVAL: 60
+  HP:
