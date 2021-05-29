@@ -1,6 +1,7 @@
 import express from "express";
 import sequelize from "./database";
-import routes from "./routes";
+import buildingRoutes from "./routes/buildingRoutes";
+import unitRoutes from "./routes/unitRoutes";
 
 const app = express();
 
@@ -9,14 +10,15 @@ app.use(express.urlencoded({ extended: true }));
 
 try {
 	sequelize.authenticate();
+	sequelize.sync({ force: true });
 	console.log("Connected to database.");
-	sequelize.sync();
 } catch (error) {
 	sequelize.close();
 	console.error(error);
 }
 
-app.use("/", routes);
+app.use("/building", buildingRoutes);
+app.use("/unit", unitRoutes);
 
 const port = process.env.PORT || 5000;
 
