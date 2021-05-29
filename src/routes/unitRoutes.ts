@@ -7,4 +7,6 @@ router.get("/", UnitController.getAll);
 
 router.post("/", UnitController.create);
 
+router.put("/feed/:id", UnitController.feedOneUnit);
+
 export default router;

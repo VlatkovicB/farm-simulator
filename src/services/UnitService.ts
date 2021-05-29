@@ -1,12 +1,20 @@
 import Unit from "../models/Unit";
 
 class UnitService {
-	public async getAll() {
-		return await Unit.findAll();
+	public getAll() {
+		return Unit.findAll();
 	}
 
-	public async create(unit: Unit) {
-		return await Unit.create(unit);
+	public create(unit: Unit) {
+		return Unit.create(unit);
+	}
+
+	public findOne(unitId: number) {
+		return Unit.findOne({ where: { id: unitId } });
+	}
+
+	update(unit: Unit) {
+		return unit.save();
 	}
 }
 

@@ -6,6 +6,7 @@ interface UnitAttributes {
 	feedingInterval: number;
 	hp: number;
 	buildingId: number;
+	lastFed: Date;
 }
 
 class Unit extends Model implements UnitAttributes {
@@ -13,6 +14,7 @@ class Unit extends Model implements UnitAttributes {
 	feedingInterval: number;
 	hp: number;
 	buildingId: number;
+	lastFed: Date;
 }
 
 Unit.init(
@@ -24,6 +26,9 @@ Unit.init(
 		feedingInterval: {
 			type: DataType.INTEGER,
 			defaultValue: 10,
+		},
+		lastFed: {
+			type: DataType.DATE,
 		},
 		hp: {
 			type: DataType.INTEGER,
