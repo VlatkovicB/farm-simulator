@@ -4,7 +4,7 @@ import Unit from "./Unit";
 
 import config from "../config";
 
-const { BUILDING_FEEDING_INTERVAL } = config.app;
+const { BUILDING_FEEDING_INTERVAL } = config;
 
 interface BuildingtAttributes {
 	name: string;

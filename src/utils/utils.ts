@@ -2,7 +2,7 @@ import config from "../config";
 import BuildingController from "../controllers/BuildingController";
 import UnitController from "../controllers/UnitController";
 
-const { BUILDING_FEEDING_INTERVAL, UNIT_FEEDING_INTERVAL } = config.app;
+const { BUILDING_FEEDING_INTERVAL, UNIT_FEEDING_INTERVAL } = config;
 
 // Building feeding units
 export const buildingFeedingUnits = () =>
