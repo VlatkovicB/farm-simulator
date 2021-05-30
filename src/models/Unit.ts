@@ -3,7 +3,7 @@ import sequelize from "../database";
 
 import config from "../config";
 
-const { UNIT_FEEDING_INTERVAL, HP: hp } = config.app;
+const { UNIT_FEEDING_INTERVAL, HP } = config.app;
 
 interface UnitAttributes {
 	name: string;
@@ -11,6 +11,7 @@ interface UnitAttributes {
 	hp: number;
 	buildingId: number;
 	lastFed: Date;
+	alive: boolean;
 }
 
 class Unit extends Model implements UnitAttributes {
@@ -19,6 +20,7 @@ class Unit extends Model implements UnitAttributes {
 	hp: number;
 	buildingId: number;
 	lastFed: Date;
+	alive: boolean;
 }
 
 Unit.init(
@@ -40,12 +42,22 @@ Unit.init(
 		buildingId: {
 			type: DataType.INTEGER,
 		},
+		alive: {
+			type: DataType.BOOLEAN,
+		},
 	},
 	{ sequelize, tableName: "unit" }
 );
 
-Unit.beforeCreate("updateHp", (unit) => {
-	unit.hp = hp || Math.round(Math.random() * 50 + 50);
+Unit.beforeCreate("before create", (unit) => {
+	unit.hp = HP || Math.round(Math.random() * 50 + 50);
+	unit.alive = true;
+});
+
+Unit.beforeUpdate("before update", (unit) => {
+	if (unit.hp === 0) {
+		unit.alive = false;
+	}
 });
 
 export default Unit;

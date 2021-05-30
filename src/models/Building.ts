@@ -2,6 +2,10 @@ import { DataType, Model } from "sequelize-typescript";
 import sequelize from "../database";
 import Unit from "./Unit";
 
+import config from "../config";
+
+const { BUILDING_FEEDING_INTERVAL } = config.app;
+
 interface BuildingtAttributes {
 	name: string;
 	feedingInterval: number;
@@ -20,8 +24,7 @@ Building.init(
 		},
 		feedingInterval: {
 			type: DataType.INTEGER,
-			defaultValue: 60,
-			allowNull: false,
+			defaultValue: BUILDING_FEEDING_INTERVAL,
 		},
 	},
 	{ sequelize, tableName: "building" }

@@ -3,6 +3,7 @@ import express from "express";
 import sequelize from "./database";
 import buildingRoutes from "./routes/buildingRoutes";
 import unitRoutes from "./routes/unitRoutes";
+import { buildingFeedingUnits, unitsDecaying } from "./utils/utils";
 
 const app = express();
 
@@ -16,6 +17,9 @@ try {
 	sequelize.close();
 	console.error(error);
 }
+
+unitsDecaying();
+buildingFeedingUnits();
 
 app.use("/building", buildingRoutes);
 app.use("/unit", unitRoutes);

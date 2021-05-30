@@ -1,11 +1,11 @@
 import Building from "../models/Building";
 
 class BuildingService {
-	public async getAll() {
+	async getAll() {
 		return await Building.findAll();
 	}
 
-	public async create(building: Building) {
+	async create(building: Building) {
 		return await Building.create(building);
 	}
 }
