@@ -1,14 +1,10 @@
 import yaml from "js-yaml";
 import fs from "fs";
-import { DatabaseSettings } from "./database";
 
 interface Config {
-	app: {
-		UNIT_FEEDING_INTERVAL: number;
-		BUILDING_FEEDING_INTERVAL: number;
-		HP: number;
-	};
-	database: DatabaseSettings;
+	UNIT_FEEDING_INTERVAL: number;
+	BUILDING_FEEDING_INTERVAL: number;
+	HP: number;
 }
 
 let doc: Config;

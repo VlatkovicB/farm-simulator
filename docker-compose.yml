@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:13.1
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root"]
+      timeout: 45s
+      interval: 10s
+      retries: 5
+    restart: always
+    environment:
+      - POSTGRES_DB=farm-simulator
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASS=postgres
+    volumes:
+      - ./farm-simulator:/farm-simulator/
+    ports:
+      - 5432:5432
+  app:
+    image: vlatkovicb/farm-simulator:1.6
+    environment:
+      - DB_URL=postgres://root:postgres@postgres:5432/farm-simulator
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"

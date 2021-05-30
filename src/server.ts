@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 try {
 	sequelize.authenticate();
+	sequelize.sync();
 	console.log("Connected to database.");
 } catch (error) {
 	sequelize.close();

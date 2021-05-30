@@ -3,7 +3,7 @@ import sequelize from "../database";
 
 import config from "../config";
 
-const { UNIT_FEEDING_INTERVAL, HP } = config.app;
+const { UNIT_FEEDING_INTERVAL, HP } = config;
 
 interface UnitAttributes {
 	name: string;
