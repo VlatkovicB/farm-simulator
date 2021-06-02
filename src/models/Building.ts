@@ -4,7 +4,7 @@ import Unit from "./Unit";
 
 import config from "../config";
 
-const { BUILDING_FEEDING_INTERVAL } = config;
+const buildingFeedingInterval = config.BUILDING_FEEDING_INTERVAL;
 
 interface BuildingtAttributes {
 	name: string;
@@ -24,7 +24,7 @@ Building.init(
 		},
 		feedingInterval: {
 			type: DataType.INTEGER,
-			defaultValue: BUILDING_FEEDING_INTERVAL,
+			defaultValue: buildingFeedingInterval,
 		},
 	},
 	{ sequelize, tableName: "building" }

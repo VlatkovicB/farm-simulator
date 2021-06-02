@@ -36,6 +36,26 @@ class UnitService {
 			throw new Error("Unit can't be fed that often!");
 		}
 	}
+
+	async feedUnits(amount: number) {
+		const allUnits = await this.getAll();
+
+		for (const unit of allUnits) {
+			try {
+				await this.feedOne(unit, amount);
+			} catch (error) {
+				console.error("Unit has been fed recently.");
+			}
+		}
+	}
+
+	async unitsDecay() {
+		const units = await this.getAll();
+
+		for (const unit of units) {
+			await this.loseHealth(unit);
+		}
+	}
 }
 
 export default new UnitService();

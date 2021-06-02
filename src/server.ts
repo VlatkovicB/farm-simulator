@@ -1,5 +1,4 @@
 import express from "express";
-
 import sequelize from "./database";
 import buildingRoutes from "./routes/buildingRoutes";
 import unitRoutes from "./routes/unitRoutes";

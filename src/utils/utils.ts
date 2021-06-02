@@ -1,19 +1,17 @@
 import config from "../config";
-import BuildingController from "../controllers/BuildingController";
-import UnitController from "../controllers/UnitController";
+import UnitService from "../services/UnitService";
 
 const { BUILDING_FEEDING_INTERVAL, UNIT_FEEDING_INTERVAL } = config;
 
-// Building feeding units
-export const buildingFeedingUnits = () =>
+export const buildingFeedingUnits = (): NodeJS.Timeout =>
 	setInterval(() => {
 		const feedAmount = Math.ceil(
 			BUILDING_FEEDING_INTERVAL / UNIT_FEEDING_INTERVAL / 2
 		);
-		BuildingController.feedUnits(feedAmount);
+		UnitService.feedUnits(feedAmount);
 	}, BUILDING_FEEDING_INTERVAL);
 
-export const unitsDecaying = () =>
+export const unitsDecaying = (): NodeJS.Timeout =>
 	setInterval(() => {
-		UnitController.unitsDecay();
+		UnitService.unitsDecay();
 	}, UNIT_FEEDING_INTERVAL);

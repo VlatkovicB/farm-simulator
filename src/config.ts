@@ -1,18 +1,13 @@
-import yaml from "js-yaml";
-import fs from "fs";
-
 interface Config {
 	UNIT_FEEDING_INTERVAL: number;
 	BUILDING_FEEDING_INTERVAL: number;
 	HP: number;
 }
 
-let doc: Config;
+const config: Config = {
+	UNIT_FEEDING_INTERVAL: parseInt(process.env.UNIT_FEEDING_INTERVAL),
+	BUILDING_FEEDING_INTERVAL: parseInt(process.env.BUILDING_FEEDING_INTERVAL),
+	HP: parseInt(process.env.HP),
+};
 
-try {
-	doc = <Config>yaml.load(fs.readFileSync(__dirname + "/config.yml", "utf8"));
-} catch (error) {
-	console.log(error);
-}
-
-export default doc;
+export default config;

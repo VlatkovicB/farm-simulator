@@ -48,14 +48,6 @@ class UnitController {
 			response.status(500).send({ message: error.message });
 		}
 	}
-
-	async unitsDecay() {
-		const units = await UnitService.getAll();
-
-		for (const unit of units) {
-			await UnitService.loseHealth(unit);
-		}
-	}
 }
 
 export default new UnitController();
