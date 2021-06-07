@@ -2,6 +2,7 @@ import express from "express";
 import sequelize from "./database";
 import buildingRoutes from "./routes/buildingRoutes";
 import unitRoutes from "./routes/unitRoutes";
+import { errorHandler } from "./utils/errorHandling";
 import { buildingFeedingUnits, unitsDecaying } from "./utils/utils";
 
 const app = express();
@@ -23,6 +24,8 @@ buildingFeedingUnits();
 
 app.use("/building", buildingRoutes);
 app.use("/unit", unitRoutes);
+
+app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
 

@@ -1,3 +1,4 @@
+import BadRequestError from "../errors/BadRequestError";
 import Unit from "../models/Unit";
 
 class UnitService {
@@ -25,7 +26,9 @@ class UnitService {
 
 		const isRecentlyFed = lastFed && now.getTime() - lastFed.getTime() < 5000;
 
-		if (!alive) throw new Error("Unit has died.");
+		if (!alive) {
+			throw new BadRequestError("Unit has died.");
+		}
 
 		if (!lastFed || !isRecentlyFed) {
 			unit.hp += amount;
@@ -33,19 +36,15 @@ class UnitService {
 
 			return unit.save();
 		} else {
-			throw new Error("Unit can't be fed that often!");
+			throw new BadRequestError("Unit can't be fed that often!");
 		}
 	}
 
 	async feedUnits(amount: number) {
 		const allUnits = await this.getAll();
 
-		for (const unit of allUnits) {
-			try {
-				await this.feedOne(unit, amount);
-			} catch (error) {
-				console.error("Unit has been fed recently.");
-			}
+		for await (const unit of allUnits) {
+			if (unit.alive) this.feedOne(unit, amount);
 		}
 	}
 

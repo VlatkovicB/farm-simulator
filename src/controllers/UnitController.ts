@@ -1,19 +1,20 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import NotFoundError from "../errors/NotFoundError";
 import Unit from "../models/Unit";
 import UnitService from "../services/UnitService";
 
 class UnitController {
-	async getAll(request: Request, response: Response) {
+	async getAll(request: Request, response: Response, next: NextFunction) {
 		try {
 			const data = await UnitService.getAll();
 
 			response.status(200).send(data);
 		} catch (error) {
-			response.status(500).send({ error });
+			next(error);
 		}
 	}
 
-	async create(request: Request, response: Response) {
+	async create(request: Request, response: Response, next: NextFunction) {
 		const unit: Unit = request.body;
 
 		try {
@@ -21,31 +22,24 @@ class UnitController {
 
 			response.status(201).send(data);
 		} catch (error) {
-			response.status(500).send({ error });
+			next(error);
 		}
 	}
 
-	async feedOneUnit(request: Request, response: Response) {
+	async feedOneUnit(request: Request, response: Response, next: NextFunction) {
 		const { id } = request.params;
 		const unitId = parseInt(id);
 		try {
 			const unit = await UnitService.findOne(unitId);
 
 			if (unit) {
-				try {
-					const updatedUnit = await UnitService.feedOne(unit, 1);
-					response.status(200).send(updatedUnit);
-				} catch (error) {
-					response
-						.status(400)
-						.send({ message: "Unit can't be fed that often!" });
-				}
+				const updatedUnit = await UnitService.feedOne(unit, 1);
+				response.status(200).send(updatedUnit);
 			} else {
-				response.status(404).send({ message: "Unit not found." });
+				throw new NotFoundError(`There's no unit with ID: ${id}`);
 			}
 		} catch (error) {
-			console.log(error);
-			response.status(500).send({ message: error.message });
+			next(error);
 		}
 	}
 }
