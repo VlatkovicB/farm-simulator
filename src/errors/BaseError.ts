@@ -9,12 +9,4 @@ export default abstract class BaseError extends Error {
 		this.message = message;
 		this.description = description;
 	}
-
-	toJSON(): any {
-		return {
-			code: this.code,
-			message: this.message,
-			description: this.description,
-		};
-	}
 }
