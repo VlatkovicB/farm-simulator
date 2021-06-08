@@ -1,14 +1,21 @@
 import Building from "../models/Building";
-import { buildings } from "../utils/utils";
+import { ManageEntities } from "../utils/ManageEntities";
 
 class BuildingService {
 	getAll() {
 		return Building.findAll();
 	}
 
-	create(building: Building) {
-		buildings.push(building);
-		return Building.create(building);
+	async create(building: Building) {
+		const createdBuilding = await Building.create(building);
+
+		ManageEntities.getInstance().registerBuilding(createdBuilding);
+
+		return createdBuilding;
+	}
+
+	findById(id: number) {
+		return Building.findOne({ where: { id } });
 	}
 }
 

@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
+import BadRequestError from "../errors/BadRequestError";
 import NotFoundError from "../errors/NotFoundError";
 import Unit from "../models/Unit";
+import BuildingService from "../services/BuildingService";
 import UnitService from "../services/UnitService";
 
 class UnitController {
@@ -18,6 +20,12 @@ class UnitController {
 		const unit: Unit = request.body;
 
 		try {
+			const building = await BuildingService.findById(unit.buildingId);
+
+			if (!building)
+				throw new BadRequestError(
+					`There is no building with ID: ${unit.buildingId}.`
+				);
 			const data = await UnitService.create(unit);
 
 			response.status(201).send(data);

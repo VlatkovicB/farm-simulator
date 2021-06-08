@@ -1,8 +1,8 @@
 import { DataType, Model } from "sequelize-typescript";
-import sequelize from "../database";
-
 import Config from "../config";
+import sequelize from "../database";
 import UnitService from "../services/UnitService";
+
 
 const unitFeedingInterval = Config.UNIT_FEEDING_INTERVAL;
 const hp = Config.HP;
@@ -24,12 +24,12 @@ class Unit extends Model implements UnitAttributes {
 	lastFed: Date;
 	alive: boolean;
 
-	loseHealth(): void {
+	startDecay(): void {
 		setTimeout(() => {
 			if (this.alive) {
 				this.hp -= 1;
 				UnitService.update(this);
-				this.loseHealth();
+				this.startDecay();
 			}
 		}, this.feedingInterval);
 	}

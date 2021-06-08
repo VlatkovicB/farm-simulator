@@ -1,9 +1,9 @@
 import { DataType, Model } from "sequelize-typescript";
+import config from "../config";
 import sequelize from "../database";
+import UnitService from "../services/UnitService";
 import Unit from "./Unit";
 
-import config from "../config";
-import UnitService from "../services/UnitService";
 
 const buildingFeedingInterval = config.BUILDING_FEEDING_INTERVAL;
 
@@ -16,13 +16,13 @@ class Building extends Model implements BuildingtAttributes {
 	name: string;
 	feedingInterval: number;
 
-	feedUnits(): void {
+	initiateFeeding(): void {
 		setTimeout(async () => {
 			const units = await UnitService.findByBuildingId(this.id);
 
 			units.forEach((unit) => unit.gainHealth(this.feedingInterval));
 
-			this.feedUnits();
+			this.initiateFeeding();
 		}, this.feedingInterval);
 	}
 }

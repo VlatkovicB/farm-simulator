@@ -1,15 +1,16 @@
 import BadRequestError from "../errors/BadRequestError";
 import Unit from "../models/Unit";
-import { units } from "../utils/utils";
+import { ManageEntities } from "../utils/ManageEntities";
 
 class UnitService {
 	getAll() {
 		return Unit.findAll();
 	}
 
-	create(unit: Unit) {
-		units.push(unit);
-		return Unit.create(unit);
+	async create(unit: Unit) {
+		const createdUnit = await Unit.create(unit);
+		ManageEntities.getInstance().registerUnit(createdUnit);
+		return createdUnit;
 	}
 
 	findOne(unitId: number) {
