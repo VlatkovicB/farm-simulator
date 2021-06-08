@@ -18,7 +18,7 @@ services:
     ports:
       - 5432:5432
   app:
-    image: vlatkovicb/farm-simulator:1.6
+    image: vlatkovicb/farm-simulator:1.7
     environment:
       - DB_URL=postgres://root:postgres@postgres:5432/farm-simulator
     depends_on:
