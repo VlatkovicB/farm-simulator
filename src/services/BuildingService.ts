@@ -1,4 +1,5 @@
 import Building from "../models/Building";
+import { buildings } from "../utils/utils";
 
 class BuildingService {
 	getAll() {
@@ -6,6 +7,7 @@ class BuildingService {
 	}
 
 	create(building: Building) {
+		buildings.push(building);
 		return Building.create(building);
 	}
 }

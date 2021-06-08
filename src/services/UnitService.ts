@@ -1,5 +1,6 @@
 import BadRequestError from "../errors/BadRequestError";
 import Unit from "../models/Unit";
+import { units } from "../utils/utils";
 
 class UnitService {
 	getAll() {
@@ -7,6 +8,7 @@ class UnitService {
 	}
 
 	create(unit: Unit) {
+		units.push(unit);
 		return Unit.create(unit);
 	}
 
@@ -30,7 +32,7 @@ class UnitService {
 			throw new BadRequestError("Unit has died.");
 		}
 
-		if (!lastFed || !isRecentlyFed) {
+		if (!isRecentlyFed) {
 			unit.hp += amount;
 			unit.lastFed = now;
 
@@ -40,20 +42,20 @@ class UnitService {
 		}
 	}
 
-	async feedUnits(amount: number) {
-		const allUnits = await this.getAll();
-
-		for await (const unit of allUnits) {
-			if (unit.alive) this.feedOne(unit, amount);
-		}
-	}
-
 	async unitsDecay() {
 		const units = await this.getAll();
 
 		for (const unit of units) {
 			await this.loseHealth(unit);
 		}
+	}
+
+	update(unit: Unit) {
+		return unit.save();
+	}
+
+	findByBuildingId(id: number) {
+		return Unit.findAll({ where: { buildingId: id } });
 	}
 }
 

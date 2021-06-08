@@ -2,6 +2,7 @@ import { DataType, Model } from "sequelize-typescript";
 import sequelize from "../database";
 
 import Config from "../config";
+import UnitService from "../services/UnitService";
 
 const unitFeedingInterval = Config.UNIT_FEEDING_INTERVAL;
 const hp = Config.HP;
@@ -22,6 +23,26 @@ class Unit extends Model implements UnitAttributes {
 	buildingId: number;
 	lastFed: Date;
 	alive: boolean;
+
+	loseHealth(): void {
+		setTimeout(() => {
+			if (this.alive) {
+				this.hp -= 1;
+				UnitService.update(this);
+				this.loseHealth();
+			}
+		}, this.feedingInterval);
+	}
+
+	gainHealth(buildingInterval: number): void {
+		setTimeout(() => {
+			if (this.alive) {
+				const amount = buildingInterval / this.feedingInterval / 2;
+				UnitService.feedOne(this, amount);
+				this.gainHealth(buildingInterval);
+			}
+		}, buildingInterval);
+	}
 }
 
 Unit.init(
