@@ -3,7 +3,6 @@ import Config from "../config";
 import sequelize from "../database";
 import UnitService from "../services/UnitService";
 
-
 const unitFeedingInterval = Config.UNIT_FEEDING_INTERVAL;
 const hp = Config.HP;
 

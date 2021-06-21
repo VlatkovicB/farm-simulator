@@ -10,4 +10,6 @@ const config: Config = {
 	HP: parseInt(process.env.HP),
 };
 
+export const MINIMUM_INTERVAL = 1000;
+
 export default config;

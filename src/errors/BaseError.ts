@@ -1,6 +1,7 @@
+import { SequelizeScopeError } from "sequelize/types";
 import { HttpCode } from "../enums/HttpCodes";
 
-export default abstract class BaseError extends Error {
+export default abstract class BaseError extends Error implements SequelizeScopeError{
 	description: string;
 	code: HttpCode;
 
