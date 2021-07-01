@@ -1,8 +1,4 @@
-interface Config {
-	UNIT_FEEDING_INTERVAL: number;
-	BUILDING_FEEDING_INTERVAL: number;
-	HP: number;
-}
+import { Config } from "./definitions/Config";
 
 const config: Config = {
 	UNIT_FEEDING_INTERVAL: parseInt(process.env.UNIT_FEEDING_INTERVAL),

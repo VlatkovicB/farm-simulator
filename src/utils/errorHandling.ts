@@ -8,7 +8,7 @@ export const errorHandler = (
 	request: Request,
 	response: Response,
 	next: NextFunction
-): void => {
+) => {
 	let description, message, code;
 
 	if (error instanceof BaseError) {
@@ -18,7 +18,7 @@ export const errorHandler = (
 	if (error instanceof ValidationError) {
 		message = [];
 		description = [];
-		
+
 		error.errors.map((err, index) => {
 			message[index] = err.type;
 			description[index] = err.message;
@@ -26,7 +26,7 @@ export const errorHandler = (
 		code = HttpCode.BAD_REQUEST;
 	}
 
-	response.status(code).send({
+	return response.status(code).send({
 		description,
 		message,
 		code,

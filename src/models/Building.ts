@@ -1,15 +1,11 @@
 import { DataType, Model } from "sequelize-typescript";
 import config, { MINIMUM_INTERVAL } from "../config";
 import sequelize from "../database";
+import { BuildingtAttributes } from "../definitions/BuildingAttributes";
 import UnitService from "../services/UnitService";
 import Unit from "./Unit";
 
 const buildingFeedingInterval = config.BUILDING_FEEDING_INTERVAL;
-
-interface BuildingtAttributes {
-	name: string;
-	feedingInterval: number;
-}
 
 class Building extends Model implements BuildingtAttributes {
 	name: string;

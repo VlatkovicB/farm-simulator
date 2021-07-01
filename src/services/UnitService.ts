@@ -33,14 +33,14 @@ class UnitService {
 			throw new BadRequestError("Unit has died.");
 		}
 
-		if (!isRecentlyFed) {
-			unit.hp += amount;
-			unit.lastFed = now;
-
-			return unit.save();
-		} else {
+		if (isRecentlyFed) {
 			throw new BadRequestError("Unit can't be fed that often!");
 		}
+
+		unit.hp += amount;
+		unit.lastFed = now;
+
+		return unit.save();
 	}
 
 	async unitsDecay() {

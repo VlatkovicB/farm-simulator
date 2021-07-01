@@ -6,9 +6,9 @@ class BuildingController {
 	async getAll(request: Request, response: Response, next: NextFunction) {
 		try {
 			const data = await BuildingService.getAll();
-			response.status(200).send(data);
+			return response.status(200).send(data);
 		} catch (error) {
-			next(error);
+			return next(error);
 		}
 	}
 
@@ -18,9 +18,9 @@ class BuildingController {
 		try {
 			const data = await BuildingService.create(building);
 
-			response.status(201).send(data);
+			return response.status(201).send(data);
 		} catch (error) {
-			next(error);
+			return next(error);
 		}
 	}
 }

@@ -1,19 +1,11 @@
 import { DataType, Model } from "sequelize-typescript";
 import Config from "../config";
 import sequelize from "../database";
+import { UnitAttributes } from "../definitions/UnitAttributes";
 import UnitService from "../services/UnitService";
 
 const unitFeedingInterval = Config.UNIT_FEEDING_INTERVAL;
 const hp = Config.HP;
-
-interface UnitAttributes {
-	name: string;
-	feedingInterval: number;
-	hp: number;
-	buildingId: number;
-	lastFed: Date;
-	alive: boolean;
-}
 
 class Unit extends Model implements UnitAttributes {
 	name: string;

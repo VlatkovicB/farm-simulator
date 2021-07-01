@@ -10,9 +10,9 @@ class UnitController {
 		try {
 			const data = await UnitService.getAll();
 
-			response.status(200).send(data);
+			return response.send(data);
 		} catch (error) {
-			next(error);
+			return next(error);
 		}
 	}
 
@@ -22,32 +22,39 @@ class UnitController {
 		try {
 			const building = await BuildingService.findById(unit.buildingId);
 
-			if (!building)
+			if (!building) {
 				throw new BadRequestError(
 					`There is no building with ID: ${unit.buildingId}.`
 				);
+			}
+
 			const data = await UnitService.create(unit);
 
-			response.status(201).send(data);
+			return response.status(201).send(data);
 		} catch (error) {
-			next(error);
+			return next(error);
 		}
 	}
 
 	async feedOneUnit(request: Request, response: Response, next: NextFunction) {
 		const { id } = request.params;
-		const unitId = parseInt(id);
+
+		if (!id) {
+			return next(new BadRequestError(`ID not provided.`));
+		}
+
 		try {
+			const unitId = parseInt(id);
 			const unit = await UnitService.findOne(unitId);
 
-			if (unit) {
-				const updatedUnit = await UnitService.feedOne(unit, 1);
-				response.status(200).send(updatedUnit);
-			} else {
+			if (!unit) {
 				throw new NotFoundError(`There's no unit with ID: ${id}`);
 			}
+
+			const updatedUnit = await UnitService.feedOne(unit, 1);
+			return response.status(200).send(updatedUnit);
 		} catch (error) {
-			next(error);
+			return next(error);
 		}
 	}
 }
