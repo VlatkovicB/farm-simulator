@@ -1,10 +1,10 @@
-import express from "express";
-import BuildingController from "../controllers/BuildingController";
+import express from "express"
+import BuildingController from "../controllers/BuildingController"
 
-const router = express.Router();
+const router = express.Router()
 
-router.get("/", BuildingController.getAll);
+router.get("/", BuildingController.getAll)
 
-router.post("/", BuildingController.create);
+router.post("/", BuildingController.create)
 
-export default router;
+export default router
